@@ -38,3 +38,21 @@ Refer to `EASY_DEPLOY.md` for Render hosting instructions and `CODESPACE_TEST.md
 - `GF_NAME`: Aradhya
 - `BOT_NAME`: Jeet
 - `WEB_PASSWORD`: love u
+
+Additional (Render / Web) environment variables
+- `GROQ_API_KEY`: Groq AI API key (get from https://console.groq.com) — one of the primary AI providers used by the web app.
+- `DATABASE_URL`: PostgreSQL connection string for persistent storage (Neon, Render Postgres, etc.). Example: `postgresql://user:pass@host:5432/dbname`. If omitted, the app falls back to local `db.json` (TinyDB).
+
+Note: `psycopg2-binary` is included in `requirements.txt` to enable PostgreSQL connectivity (Neon/Postgres).
+
+DB connectivity test
+--------------------
+There's a helper script `db_check.py` to verify `DATABASE_URL` is configured and that the app can perform basic read/write operations.
+
+Run:
+```bash
+export DATABASE_URL='postgresql://user:pass@host:5432/dbname'
+python db_check.py
+```
+
+If the script reports success, your Postgres/Neon connection is working and the app can transfer data.

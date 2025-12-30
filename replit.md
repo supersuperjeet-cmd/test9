@@ -66,6 +66,22 @@ Make sure all these files are in your GitHub repository:
 - `GEMINI_API_KEY`: Google Gemini backup
 - `OPENAI_API_KEY`: OpenAI backup
 
+**Notes:**
+- The `DATABASE_URL` should point to a PostgreSQL provider such as Neon (recommended) or Render Postgres. Example: `postgresql://user:pass@host:5432/dbname`.
+- `psycopg2-binary` is already included in `requirements.txt` to provide Postgres/Neon connectivity.
+- At least one AI provider API key is recommended (`GROQ_API_KEY`, `GEMINI_API_KEY`, or `OPENAI_API_KEY`).
+
+## Quick DB connectivity test
+
+To verify your `DATABASE_URL` and confirm the app can read/write to your Postgres (Neon/Render), use the bundled script:
+
+```bash
+export DATABASE_URL='postgresql://user:pass@host:5432/dbname'
+python db_check.py
+```
+
+The script will create a small `app_messages` table (if missing), insert a test row and read it back. Any errors will print a helpful message.
+
 5. Click **"Create Web Service"** → Render will deploy automatically
 
 ### Step 3: It's Live! 🎉
@@ -79,6 +95,10 @@ Make sure all these files are in your GitHub repository:
 
 ### Required
 - **`OWNER_ID`**: Any number that identifies the user. Default is `0`
+
+**Render Readiness Checklist**
+- **Env vars set:** `GROQ_API_KEY` (or backup `GEMINI_API_KEY`/`OPENAI_API_KEY`), `SESSION_SECRET`, `WEB_PASSWORD` (optional), and `DATABASE_URL` if you want persistent storage.
+- **Requirements:** `requirements.txt` includes `psycopg2-binary` for PostgreSQL support and standard AI client libraries (`google-genai`, `openai`).
 
 ### Secrets (Keep Secure!)
 - **`GROQ_API_KEY`**: Your Groq AI API key (makes AI work)
